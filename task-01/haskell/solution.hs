@@ -1,6 +1,3 @@
-lineLength :: Int
-lineLength = 9
-
 xMax :: Int
 xMax = 5
 
@@ -12,9 +9,6 @@ getLinesFromFile file = do
     contents <- readFile file
     let fileLines = lines contents
     return fileLines
-
-padToLineLength :: String -> String
-padToLineLength input = if length input == lineLength then input else padToLineLength (input ++ " ")
 
 cozyScoreForLine :: String -> String -> Int
 cozyScoreForLine target cover = sum $ zipWith cozyCompare target cover
@@ -38,7 +32,6 @@ cozyScore :: [String] -> [String] -> Int
 cozyScore target blanket = maximum $ fmap (cozyScoreY target . xOffsetBlanket blanket) [0..xMax]
 
 main = do
-    rawJoe <- getLinesFromFile "../joe.txt"
+    joe <- getLinesFromFile "../joe.txt"
     blanket <- getLinesFromFile "../teppe.txt"
-    let joe = fmap padToLineLength rawJoe
     print $ cozyScore joe blanket
